@@ -1,18 +1,58 @@
 #Könyvek nyilvántartása -> xlsx-be való kimentés
 #Szerző neve, Könyv címe, könyv hossza, könyv nyelve, ráfordított idő, könyv leírása, értékelés (5/5)
+
 import pathlib
 from tkinter import *
 from tkinter.ttk import Combobox
-from tkinter import messagebox
+from tkinter import messagebox, filedialog
+from tkinter import ttk
 import openpyxl
 from openpyxl import Workbook
 from tkinter import Menu
+import pandas as pd
 
 ablak = Tk()
 ablak.title('Könyvek nyilvántartása')
 ablak.geometry('700x400+100+100')
 ablak.resizable(False, False)
 ablak.configure(bg='#66B2FF')
+
+def uj_oldal():
+    uj_ablak = Toplevel(ablak)
+    uj_ablak.title('Adatok')
+    uj_ablak.geometry('1100x420+100+100')
+    uj_ablak.configure(bg='#66B2FF')
+
+    def megnyit():
+        filename = filedialog.askopenfilename(title="Open file", filetype=(('xlsx files','*.xlsx'),('All files', '*.*')))
+
+        if filename:
+            try:
+                filename = r'{}'.format(filename)
+                df = pd.read_excel(filename)
+            except:
+                messagebox.showerror('Error', "Nem elérhető a fájl")
+
+            tree.delete(*tree.get_children())
+
+            tree['column'] = list(df.columns)
+            tree['show'] = 'headings'
+
+            for oszlop in tree['column']:
+                tree.heading(oszlop, text=oszlop)
+
+            df_rows = df.to_numpy().tolist()
+            for sor in df_rows:
+                tree.insert('', 'end', values=sor)
+
+    frame = Frame(uj_ablak)
+    frame.pack(pady=25)
+
+    tree = ttk.Treeview(frame)
+    tree.pack()
+
+    megnyit_gomb = Button(uj_ablak, text='Megnyit', bg='#fff', width=15, height=1, command=megnyit)
+    megnyit_gomb.pack(padx=10, pady=20)
 
 #Menü
 menubar = Menu(ablak)
@@ -21,7 +61,7 @@ ablak.config(menu=menubar)
 file_menu = Menu(menubar, tearoff=0)
 menubar.add_cascade(label="File",menu=file_menu)
 
-file_menu.add_command(label='Új oldal')
+file_menu.add_command(label='Új oldal', command=uj_oldal)
 file_menu.add_separator()
 file_menu.add_command(label='Kilépés', command=ablak.destroy)
 
@@ -80,8 +120,6 @@ def torol():
     k_nyelv.delete(first=0, last=100)
     ertekeles.delete(first=0, last=100)
     leiras.delete(1.0, 'end')
-
-
 
 #Főoldal
 Frame(ablak, width=600, height=300, bg='#CCE5FF').place(x=50, y=50)
