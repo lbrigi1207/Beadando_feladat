@@ -6,6 +6,7 @@ from tkinter.ttk import Combobox
 from tkinter import messagebox
 import openpyxl
 from openpyxl import Workbook
+from tkinter import Menu
 
 ablak = Tk()
 ablak.title('Könyvek nyilvántartása')
@@ -13,8 +14,63 @@ ablak.geometry('700x400+100+100')
 ablak.resizable(False, False)
 ablak.configure(bg='#66B2FF')
 
+#Menü
+menubar = Menu(ablak)
+ablak.config(menu=menubar)
+
+file_menu = Menu(menubar, tearoff=0)
+menubar.add_cascade(label="File",menu=file_menu)
+
+file_menu.add_command(label='Új oldal')
+file_menu.add_separator()
+file_menu.add_command(label='Kilépés', command=ablak.destroy)
+
+#Fájl
+fajl = pathlib.Path('Adatok.xlsx')
+if fajl.exists():
+    pass
+else:
+    fajl = Workbook()
+    sheet = fajl.active
+    sheet['A1'] = 'Szerző neve'
+    sheet['B1'] = 'Könyv címe'
+    sheet['C1'] = 'Könyv hossza'
+    sheet['D1'] = 'Könyv nyelve'
+    sheet['E1'] = 'Ráfordított idő'
+    sheet['F1'] = 'Leírás'
+    sheet['G1'] = 'Értékelés'
+
+    fajl.save('Adatok.xlsx')
 def kuld():
-    return
+    sznev = sz_nev.get()
+    kcim = k_cim.get()
+    khossz = k_hossz.get()
+    rido = r_ido.get()
+    knyelv = k_nyelv.get()
+    ertekeless = ertekeles.get()
+    leirass = leiras.get(1.0, 'end')
+
+    fajl = openpyxl.load_workbook('Adatok.xlsx')
+    sheet = fajl.active
+    sheet.cell(column=1, row=sheet.max_row+1, value=sznev)
+    sheet.cell(column=2, row=sheet.max_row, value=kcim)
+    sheet.cell(column=3, row=sheet.max_row, value=khossz)
+    sheet.cell(column=4, row=sheet.max_row, value=rido)
+    sheet.cell(column=5, row=sheet.max_row, value=knyelv)
+    sheet.cell(column=6, row=sheet.max_row, value=ertekeless)
+    sheet.cell(column=7, row=sheet.max_row, value=leirass)
+
+    fajl.save(r'Adatok.xlsx')
+
+    messagebox.showinfo('info', 'Hozzáadva!')
+
+    sz_nev.delete(first=0, last=100)
+    k_cim.delete(first=0, last=100)
+    k_hossz.delete(first=0, last=100)
+    r_ido.delete(first=0, last=100)
+    k_nyelv.delete(first=0, last=100)
+    ertekeles.delete(first=0, last=100)
+    leiras.delete(1.0, 'end')
 
 def torol():
     sz_nev.delete(first=0, last=100)
@@ -25,22 +81,9 @@ def torol():
     ertekeles.delete(first=0, last=100)
     leiras.delete(1.0, 'end')
 
-fajl = pathlib.Path('Adatok.xlsx')
-if fajl.exists():
-    pass
-else:
-    fajl = Workbook()
-    sheet = fajl.active
-    sheet['A1']='Szerző neve'
-    sheet['B1']='Könyv címe'
-    sheet['C1'] = 'Könyv hossza'
-    sheet['D1'] = 'Könyv nyelve'
-    sheet['E1'] = 'Ráfordított idő'
-    sheet['F1'] = 'Leírás'
-    sheet['G1'] = 'Értékelés'
 
-    fajl.save('Adatok.xlsx')
 
+#Főoldal
 Frame(ablak, width=600, height=300, bg='#CCE5FF').place(x=50, y=50)
 Label(ablak, text='Szerző neve', font='calibri 12 bold', bg='#CCE5FF').place(x=60, y=70)
 Label(ablak, text='Könyv címe', font='calibri 12 bold', bg='#CCE5FF').place(x=60, y=110)
@@ -83,6 +126,5 @@ leiras.place(x=400, y=100)
 
 Button(ablak, text='Küld', bg='#fff', width=15, height=1, command=kuld).place(x=50, y=360)
 Button(ablak, text='Töröl', bg='#fff', width=15, height=1, command=torol).place(x=170, y=360)
-Button(ablak, text='kilépés', bg='#fff', width=15, height=1, command=ablak.destroy).place(x=290, y=360)
 
 mainloop()
