@@ -77,8 +77,8 @@ else:
     sheet['C1'] = 'Könyv hossza'
     sheet['D1'] = 'Könyv nyelve'
     sheet['E1'] = 'Ráfordított idő'
-    sheet['F1'] = 'Leírás'
-    sheet['G1'] = 'Értékelés'
+    sheet['F1'] = 'Értékelés'
+    sheet['G1'] = 'Leírás'
 
     fajl.save('Adatok.xlsx')
 def kuld():
