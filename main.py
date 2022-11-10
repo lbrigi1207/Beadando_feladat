@@ -1,5 +1,5 @@
-#Könyvek nyilvántartása -> xlsx-be való kimentés
-#Szerző neve, Könyv címe, könyv hossza, könyv nyelve, ráfordított idő, könyv leírása, értékelés (5/5)
+#Könyvek nyilvántartása -> xlsx-be való kimentés -> xlsx-ből való behívás
+#Szerző neve, Könyv címe, könyv hossza, könyv nyelve, ráfordított idő, értékelés (5/5), könyv leírása
 
 import pathlib
 from tkinter import *
@@ -24,14 +24,15 @@ def uj_oldal():
     uj_ablak.configure(bg='#66B2FF')
 
     def megnyit():
-        filename = filedialog.askopenfilename(title="Open file", filetype=(('xlsx files','*.xlsx'),('All files', '*.*')))
+
+        filename = filedialog.askopenfilename(title="Fájl megnyitása", filetype=(('xlsx files','*.xlsx'),('All files', '*.*')))
 
         if filename:
             try:
                 filename = r'{}'.format(filename)
                 df = pd.read_excel(filename)
             except:
-                messagebox.showerror('Error', "Nem elérhető a fájl")
+                messagebox.showerror('Hiba', "Nem elérhető a fájl!")
 
             tree.delete(*tree.get_children())
 
@@ -53,6 +54,8 @@ def uj_oldal():
 
     megnyit_gomb = Button(uj_ablak, text='Megnyit', bg='#fff', width=15, height=1, command=megnyit)
     megnyit_gomb.pack(padx=10, pady=20)
+
+    uj_ablak.mainloop()
 
 #Menü
 menubar = Menu(ablak)
