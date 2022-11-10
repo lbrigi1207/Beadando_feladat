@@ -85,9 +85,9 @@ def kuld():
     sznev = sz_nev.get()
     kcim = k_cim.get()
     khossz = k_hossz.get()
-    rido = r_ido.get()
     knyelv = k_nyelv.get()
-    ertekeless = ertekeles.get()
+    rido = r_ido.get()
+    ertekeless = int(ertekeles.get())
     leirass = leiras.get(1.0, 'end')
 
     fajl = openpyxl.load_workbook('Adatok.xlsx')
@@ -95,8 +95,8 @@ def kuld():
     sheet.cell(column=1, row=sheet.max_row+1, value=sznev)
     sheet.cell(column=2, row=sheet.max_row, value=kcim)
     sheet.cell(column=3, row=sheet.max_row, value=khossz)
-    sheet.cell(column=4, row=sheet.max_row, value=rido)
-    sheet.cell(column=5, row=sheet.max_row, value=knyelv)
+    sheet.cell(column=4, row=sheet.max_row, value=knyelv)
+    sheet.cell(column=5, row=sheet.max_row, value=rido)
     sheet.cell(column=6, row=sheet.max_row, value=ertekeless)
     sheet.cell(column=7, row=sheet.max_row, value=leirass)
 
