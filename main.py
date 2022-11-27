@@ -1,15 +1,14 @@
 #Könyvek nyilvántartása -> xlsx-be való kimentés -> xlsx-ből való behívás
 #Szerző neve, Könyv címe, könyv hossza, könyv nyelve, ráfordított idő, értékelés (5/5), könyv leírása
 
-import pathlib
 from tkinter import *
 from tkinter.ttk import Combobox
 from tkinter import messagebox, filedialog
 from tkinter import ttk
 import openpyxl
-from openpyxl import Workbook
 from tkinter import Menu
 import pandas as pd
+import modul
 
 ablak = Tk()
 ablak.title('Könyvek nyilvántartása')
@@ -68,29 +67,14 @@ file_menu.add_command(label='Új oldal', command=uj_oldal)
 file_menu.add_separator()
 file_menu.add_command(label='Kilépés', command=ablak.destroy)
 
-#Fájl
-fajl = pathlib.Path('Adatok.xlsx')
-if fajl.exists():
-    pass
-else:
-    fajl = Workbook()
-    sheet = fajl.active
-    sheet['A1'] = 'Szerző neve'
-    sheet['B1'] = 'Könyv címe'
-    sheet['C1'] = 'Könyv hossza'
-    sheet['D1'] = 'Könyv nyelve'
-    sheet['E1'] = 'Ráfordított idő'
-    sheet['F1'] = 'Értékelés'
-    sheet['G1'] = 'Leírás'
-
-    fajl.save('Adatok.xlsx')
+modul.fajl()
 def kuld():
     sznev = sz_nev.get()
     kcim = k_cim.get()
     khossz = k_hossz.get()
     knyelv = k_nyelv.get()
     rido = r_ido.get()
-    ertekeless = int(ertekeles.get())
+    ertekeless = ertekeles.get()
     leirass = leiras.get(1.0, 'end')
 
     fajl = openpyxl.load_workbook('Adatok.xlsx')
