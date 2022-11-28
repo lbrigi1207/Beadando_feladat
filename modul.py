@@ -2,7 +2,6 @@ import pathlib
 from openpyxl import Workbook
 
 def fajl():
-    # Fájl
     fajl = pathlib.Path('Adatok.xlsx')
     if fajl.exists():
         pass
@@ -16,5 +15,4 @@ def fajl():
         sheet['E1'] = 'Ráfordított idő'
         sheet['F1'] = 'Értékelés'
         sheet['G1'] = 'Leírás'
-
         fajl.save('Adatok.xlsx')

@@ -1,12 +1,9 @@
-#Könyvek nyilvántartása -> xlsx-be való kimentés -> xlsx-ből való behívás
-#Szerző neve, Könyv címe, könyv hossza, könyv nyelve, ráfordított idő, értékelés (5/5), könyv leírása
-
 from tkinter import *
-from tkinter.ttk import Combobox
 from tkinter import messagebox, filedialog
-from tkinter import ttk
-import openpyxl
 from tkinter import Menu
+from tkinter import ttk
+from tkinter.ttk import Combobox
+import openpyxl
 import pandas as pd
 import modul
 
@@ -21,11 +18,8 @@ def uj_oldal():
     uj_ablak.title('Adatok')
     uj_ablak.geometry('1100x420+100+100')
     uj_ablak.configure(bg='#66B2FF')
-
     def megnyit():
-
         filename = filedialog.askopenfilename(title="Fájl megnyitása", filetype=(('xlsx files','*.xlsx'),('All files', '*.*')))
-
         if filename:
             try:
                 filename = r'{}'.format(filename)
@@ -67,6 +61,7 @@ file_menu.add_command(label='Új oldal', command=uj_oldal)
 file_menu.add_separator()
 file_menu.add_command(label='Kilépés', command=ablak.destroy)
 
+#Modul meghívása
 modul.fajl()
 def kuld():
     sznev = sz_nev.get()
@@ -86,7 +81,6 @@ def kuld():
     sheet.cell(column=5, row=sheet.max_row, value=rido)
     sheet.cell(column=6, row=sheet.max_row, value=ertekeless)
     sheet.cell(column=7, row=sheet.max_row, value=leirass)
-
     fajl.save(r'Adatok.xlsx')
 
     messagebox.showinfo('info', 'Hozzáadva!')
@@ -152,4 +146,4 @@ leiras.place(x=400, y=100)
 Button(ablak, text='Küld', bg='#fff', width=15, height=1, command=kuld).place(x=50, y=360)
 Button(ablak, text='Töröl', bg='#fff', width=15, height=1, command=torol).place(x=170, y=360)
 
-mainloop()
+ablak.mainloop()
