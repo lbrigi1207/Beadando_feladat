@@ -1,4 +1,4 @@
-# Beadando_feladat
+# Beadando_feladat - Lőrincz Brigitta (BOG4Q9)
 # Könyvek nyilvántartása -> xlsx-be való kimentés -> xlsx-ből való behívás
 # Szerző neve, Könyv címe, könyv hossza, könyv nyelve, ráfordított idő, értékelés (5/5), könyv leírása
 
